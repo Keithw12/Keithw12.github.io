@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Pushing Forward in VR"
+title:  "5 Prototypes Technical Writeup"
 date:   2020-08-01 15:58:20 -0500
 categories: Unity VR Project
 ---
