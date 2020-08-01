@@ -33,34 +33,29 @@ Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most ou
 In my last update I did a few primitive prototypes.  First a car-simulation; this is where I learned the Unity layout, what were components and gameobjects, and how to implement behaviors using C#.  I added two scripts, one to a camera and a vehicle. 
 
 The camera script:
-<a href="https://imgur.com/QXT1mBL"><img src="https://i.imgur.com/QXT1mBL.png" title="source: imgur.com" /></a>
-
-Note:  The camera has an audio listener which is important if you want the player to hear sound.
-
 <a href="https://imgur.com/hs6iPob"><img src="https://i.imgur.com/hs6iPob.png" title="source: imgur.com" /></a>
 
-Note:  Later I added '[SerializeField]' attribute which allows you to edit private values in the Unity Inspector.  Also the Update() method was changed to LateUpdate(), to allow the camera to properly update it's position after the Player Controller script updated the car's position.
+Note:  I added '[SerializeField]' attribute which allows you to edit private values in the Unity Inspector.  LateUpdate() allows the camera to properly update it's position after the PlayerController script updates the car's position.
 
-The script above simply updates the Camera's position(every frame this method is called) to the car's position plus a given offset.  It is important to note that position in 3D space is a Vector3 data type.
+The script above updates the Camera's position(every frame this method is called) to the car's position plus a given offset.  It is important to note that position in 3D space is a Vector3 data type.
 
-I then later added a speedometer and an RPM guage which are TextMeshProUGUI objects.  These are children of the Canvas which represents the HUD.
+I then added a speedometer and an RPM guage which are TextMeshProUGUI objects.  These are children of the Canvas which represents the HUD.
 <a href="https://imgur.com/kSqsdvz"><img src="https://i.imgur.com/kSqsdvz.png" title="source: imgur.com" /></a>
 
 The following componenets are attached to our vehicle GameObject:  Player Controller script, RigidBody(for physics), and a Mesh Collider(also physics in this case).
 <a href="https://imgur.com/gNpOaoQ"><img src="https://i.imgur.com/gNpOaoQ.png" title="source: imgur.com" /></a>
 
-Note:  We assigned to the Player Controller script manually a list of WheelCollider objects, the RPM and speedometer text objects from our canvas, and the Center of Mass empty GameObject we created as a child of the vehicle GameObject.  It's a child of the vehicle since we want it's position to be relative to the car's position.
+Note:  I assigned the Player Controller script manually a list of WheelCollider objects, the RPM and speedometer text objects from our canvas, and the Center of Mass empty GameObject I created as a child of the vehicle GameObject.  It's a child of the vehicle since we want it's position to be relative to the car's position.
 
 Now what does the Player Controller script do?
 <a href="https://imgur.com/mFk8B9V"><img src="https://i.imgur.com/mFk8B9V.png" title="source: imgur.com" /></a>
 
-We first declare all our variables we are using for this script.  
-Next the Start() method will get a reference to the vehicle's RigidBody component and then assign the RigidBody's property "centerOfMass" the position of our centerOfMass empty GameObject.  All this code is executed once when the game starts.
-Then we have FixedUpdate(), which is important to use as opposed to Update() since it is in-step/synced with the physics engine.  In this method, we get the horizontal and vertical inputs which are assigned in the Unity Properties as A,D and W,S.  Then, if our vehicle is grounded(all four wheels touching the plane), then we move the vehicle using force on the RigidBody and rotate using the transform.  When using transform, we use Time.deltaTime and when we use forces, we omit that in the calculation.  Lastly, we calculate the speed and RPM and use the SetText() method on our TextMeshProUGUI objects to update the HUD.
+The Start() method will get a reference to the vehicle's RigidBody component and then assign the RigidBody's property "centerOfMass" the position of our centerOfMass empty GameObject.  All this code is executed once when the game starts.
+Then I use FixedUpdate(), which is important to use as opposed to Update() since it is in-step/synced with the physics engine.  In this method, I get the horizontal and vertical inputs which are assigned in the Unity Properties as A,D and W,S.  Then, if the vehicle is grounded(all four wheels touching the plane), then I move the vehicle using force on the RigidBody and rotate using the transform.  When using transform, I use Time.deltaTime and when we use forces, we omit that in the calculation.  Lastly, we calculate the speed and RPM and use the SetText() method on the TextMeshProUGUI objects to update the HUD.
 
 That basically sums up Prototype 1.
 
-For prototype 2 we have a top-down game where animals spawn and run forward in the player's direction.  The player can shoot projectiles at the animals which will destroy them.
+Prototype 2 is a top-down game where animals spawn and run forward in the player's direction.  The player can shoot projectiles at the animals which will destroy them.
 <a href="https://imgur.com/QVbNwhz"><img src="https://i.imgur.com/QVbNwhz.png" title="source: imgur.com" /></a>
 
 I first created and assigned a Player Controller script.  
