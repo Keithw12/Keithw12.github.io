@@ -66,12 +66,14 @@ Variables are declared first of course.  Speed is assigned, we give a boundary r
 
 This prototype introduced me to prefabs, which is where I can use a GameObject as a template to create new instances whenever I'd like and the Prefab would remember which components were added and data values I've assigned.
 <a href="https://imgur.com/LfTM5KO"><img src="https://i.imgur.com/LfTM5KO.png" title="source: imgur.com" /></a>
+
 I created 4 prefabs.  One for each animal and the projectile.  They all have colliders and are set as triggers since we are not using them for physics.  The animals each have the "Move Forward", "Detect Collisions", and the "Destroy Out of Bounds" scripts.  The projectile has the same but without the "Detect Collisions".
 
 For the sake of time, I'll just explain that the Move Forward script simply uses the Update() method with a given speed value using Translate.  The Detect Collision script uses OnTriggerEnter() which then uses SetActive(false) to hide the projectile, and then the animal is destroyed with Destroy().  The Destroy out of bounds script has a topBound and lowerBound variable and the Update() checks if the object's position is outside these values and will use SetActive() or Destroy() based on that.  
 
 Later on, I added an ObjectPooler script to optimize performance.  
 <a href="https://imgur.com/svE0emf"><img src="https://i.imgur.com/svE0emf.png" title="source: imgur.com" /></a>
+
 This script inlcudes the Awake() method which is called before any Update() method.  This ensures other scripts that depend on this one are initialized properly.  Here, we are assigning a self reference of the ObjectPooler class to it's own public member.  In the Start() method we initialize our list of objects to pool.  Each object is then hidden by using SetActive(false) and added as a child to the Spawn Manager empty that was created in our hierarchy.  GetPooledObject() returns a reference to a GameObject in the pool that isn't active.
 
 This summarizes the functionality I implemented in prototype 2.
@@ -82,6 +84,7 @@ In prototype 3, I created a side-scroller that used a particle effect, sound, an
 There is 1 Prefab created and 4 scripts that are created.  The Prefab is an Obstacle and the scripts are MoveLeft, PlayerController, RepeatBackGround, and SpawnManager.  The MoveLeft script is applied to the Prefab and the Background object in our scene.  This gives the illusion to the player that they are moving in the scene, but the player is actually stationary.  
 
 <a href="https://imgur.com/RB4bfoB"><img src="https://i.imgur.com/RB4bfoB.png" title="source: imgur.com" /></a>
+
 The PlayerController script is applied to our player and does a number of things.  In Start(), we get references to the player object's Rigidbody, Animator, and AudioSource components.  In Update(), we check if the Spacebar is pressed, the player is on the ground, and that the game is not over.  In which case, we apply a force to the Rigidbody(up in this case), play our jump animation, toggle the particle effect, and then lastly play our jump sound.  The OnCollisionEnter() is used to detect when our Collider is colliding with either the ground or the obstacle using collision.gameObject.CompareTag().  In the case we collide with the ground, we toggle the dirt particle effect.  In the case that we collide with the obstacle, we play a death animation by modifying a couple parameters to cause the animation controller to transition to the state we want.  This is all done through the Animator component reference we have.  An explosion particle effect is played, and a crash sound is played.
 
 RepeatBackground script takes half the width of our BoxCollider size on the x-axis, and uses that to determine when to repeat the background by resetting the position.
