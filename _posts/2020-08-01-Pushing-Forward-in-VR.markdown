@@ -34,9 +34,11 @@ In my last update I did a few primitive prototypes.  First a car-simulation; thi
 
 The camera script:
 <a href="https://imgur.com/QXT1mBL"><img src="https://i.imgur.com/QXT1mBL.png" title="source: imgur.com" /></a>
+
 Note:  The camera has an audio listener which is important if you want the player to hear sound.
 
 <a href="https://imgur.com/hs6iPob"><img src="https://i.imgur.com/hs6iPob.png" title="source: imgur.com" /></a>
+
 Note:  Later I added '[SerializeField]' attribute which allows you to edit private values in the Unity Inspector.  Also the Update() method was changed to LateUpdate(), to allow the camera to properly update it's position after the Player Controller script updated the car's position.
 
 The script above simply updates the Camera's position(every frame this method is called) to the car's position plus a given offset.  It is important to note that position in 3D space is a Vector3 data type.
@@ -46,10 +48,12 @@ I then later added a speedometer and an RPM guage which are TextMeshProUGUI obje
 
 The following componenets are attached to our vehicle GameObject:  Player Controller script, RigidBody(for physics), and a Mesh Collider(also physics in this case).
 <a href="https://imgur.com/gNpOaoQ"><img src="https://i.imgur.com/gNpOaoQ.png" title="source: imgur.com" /></a>
+
 Note:  We assigned to the Player Controller script manually a list of WheelCollider objects, the RPM and speedometer text objects from our canvas, and the Center of Mass empty GameObject we created as a child of the vehicle GameObject.  It's a child of the vehicle since we want it's position to be relative to the car's position.
 
 Now what does the Player Controller script do?
 <a href="https://imgur.com/mFk8B9V"><img src="https://i.imgur.com/mFk8B9V.png" title="source: imgur.com" /></a>
+
 We first declare all our variables we are using for this script.  
 Next the Start() method will get a reference to the vehicle's RigidBody component and then assign the RigidBody's property "centerOfMass" the position of our centerOfMass empty GameObject.  All this code is executed once when the game starts.
 Then we have FixedUpdate(), which is important to use as opposed to Update() since it is in-step/synced with the physics engine.  In this method, we get the horizontal and vertical inputs which are assigned in the Unity Properties as A,D and W,S.  Then, if our vehicle is grounded(all four wheels touching the plane), then we move the vehicle using force on the RigidBody and rotate using the transform.  When using transform, we use Time.deltaTime and when we use forces, we omit that in the calculation.  Lastly, we calculate the speed and RPM and use the SetText() method on our TextMeshProUGUI objects to update the HUD.
@@ -61,6 +65,7 @@ For prototype 2 we have a top-down game where animals spawn and run forward in t
 
 I first created and assigned a Player Controller script.  
 <a href="https://imgur.com/QXMvEuC"><img src="https://i.imgur.com/QXMvEuC.png" title="source: imgur.com" /></a>
+
 Variables are declared first of course.  Speed is assigned, we give a boundary range for left and right on the x-coord, and declare a variable for horizontal input and our projectile Prefab we create later.  Only the Update() method is used here.  It checks to see if our Player's position is within the set boundary.  Then it gets the horizontal input(A,D) and uses transform.Translate() to update the position accordingly.  Finally there is a check for spacebar input using Input.GetKeyDown().  In that case, the script utilizes an object pooler which will get an object from the pool, activate it, and then set it's position to the player's position.
 
 
@@ -92,6 +97,7 @@ RepeatBackground script takes half the width of our BoxCollider size on the x-ax
 The SpawnManager spawns our Obstacles using InvokeRepeating() in our Start() method.  We create a method that is invoked by this which checks if the game is over, and if not we instantiate a new Obstable Prefab GameObject using Instantiate().
 
 <a href="https://imgur.com/WIGr3sD"><img src="https://i.imgur.com/WIGr3sD.png" title="source: imgur.com" /></a>
+
 The animation controller is setup on the player by setting a run animation as the default movement state.  We also update the speed value parameter to 1.0.  The other transitions happen with the scripts.
 
 That concludes Prototype 3!
@@ -106,6 +112,7 @@ I'm going to skip all the repeated details of what I've done here.  The PlayerCo
 
 Finally, we get to Prototype 5.  
 <a href="https://imgur.com/4zDnGSI"><img src="https://i.imgur.com/4zDnGSI.png" title="source: imgur.com" /></a>
+
 This prototype is a point and click type game where the player needs to click the right objects and score points.  I learned how to create a user interface using button and text objects.  I created 4 prefabs here, one for each target.  Three scripts were created:  DifficultyButton, GameManager, and Target scripts.
 
 Once again, skipping repetitive details.  The GameManager tracks the state that the game is in, and runs the coroutine where the main gameplay loop takes place.  Scripts communicate with each other by using references.
