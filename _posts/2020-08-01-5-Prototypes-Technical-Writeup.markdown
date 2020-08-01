@@ -42,7 +42,7 @@ The script above updates the Camera's position(every frame this method is called
 I then added a speedometer and an RPM guage which are TextMeshProUGUI objects.  These are children of the Canvas which represents the HUD.
 <a href="https://imgur.com/kSqsdvz"><img src="https://i.imgur.com/kSqsdvz.png" title="source: imgur.com" /></a>
 
-The following componenets are attached to our vehicle GameObject:  Player Controller script, RigidBody(for physics), and a Mesh Collider(also physics in this case).
+The following components are attached to our vehicle GameObject:  Player Controller script, RigidBody(for physics), and a Mesh Collider(also physics in this case).
 <a href="https://imgur.com/gNpOaoQ"><img src="https://i.imgur.com/gNpOaoQ.png" title="source: imgur.com" /></a>
 
 Note:  I assigned the Player Controller script manually a list of WheelCollider objects, the RPM and speedometer text objects from our canvas, and the Center of Mass empty GameObject I created as a child of the vehicle GameObject.  It's a child of the vehicle since we want it's position to be relative to the car's position.
