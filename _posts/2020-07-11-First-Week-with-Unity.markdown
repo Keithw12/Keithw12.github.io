@@ -66,7 +66,7 @@ Some visuals from a couple prototypes:
 
 Goals for next week:
 <ul>
-  <li>View the projects Jake and Sayali</li>
+  <li>View the projects from Jake and Sayali</li>
   <li>Finish the current Unity tutorial</li>
   <li>Start the Unity Oculus VR tutorial</li>
 </ul>
